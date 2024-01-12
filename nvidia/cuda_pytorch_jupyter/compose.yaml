@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  jupyter:
+    container_name: Cuda_Pytorch_Jupyter
+    image: cuda_pytorch_jupyter
+    ports:
+    # jupyter listening port
+    - 8888:8888
+    command: jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root --no-browser .
+    volumes:
+      - /datadrive/docker/cuda_pytorch_jupyter:/scratch
+    working_dir: /scratch
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
