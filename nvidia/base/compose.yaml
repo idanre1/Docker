@@ -1,0 +1,15 @@
+services:
+  test:
+    # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda/tags
+    # Known issue:
+    # Cannot pull nvidia/cuda
+    #    Error response from daemon: manifest for nvidia/cuda:latest not found: manifest unknown: manifest unknown
+    image: nvcr.io/nvidia/cuda:12.0.1-base-ubuntu22.04
+    command: nvidia-smi
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
